@@ -17,8 +17,16 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
+from aRandomSite.views import show_error_404_view
 
 urlpatterns = [
     path("admin/", admin.site.urls, name="admin"),
     path("", include("mainApp.urls"), name="mainApp"),
+    path("error404show/", show_error_404_view, name="show_error_404"),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    
+handler404 = "aRandomSite.views.error_404_view"
