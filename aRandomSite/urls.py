@@ -22,11 +22,15 @@ from django.conf.urls.static import static
 from aRandomSite.views import show_error_404_view
 
 urlpatterns = [
-    path("admin/", admin.site.urls, name="admin"),
     path("", include("mainApp.urls"), name="mainApp"),
+    path("blog/", include("blogApp.urls"), name="blogApp"),
+    path("admin/", admin.site.urls, name="admin"),
     path("error404show/", show_error_404_view, name="show_error_404"),
+    path("accounts/", include("accountsApp"), name="accountsApp")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
     
 handler404 = "aRandomSite.views.error_404_view"

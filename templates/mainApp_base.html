@@ -9,12 +9,45 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- ===============================================-->
+    <!--    Alert message-->
+    <!-- ===============================================-->
+
+    <!-- Success/Error Messages - Beautiful Toast Notifications -->
+{% if messages %}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+    {% for message in messages %}
+    <div class="toast align-items-center text-white bg-{% if message.tags == 'success' %}success{% elif message.tags == 'error' %}danger{% elif message.tags == 'warning' %}warning{% else %}primary{% endif %} border-0 mb-2" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="5000">
+        <div class="d-flex">
+            <div class="toast-body">
+                <strong>
+                    {% if message.tags == 'success' %}✓{% elif message.tags == 'error' %}✗{% elif message.tags == 'warning' %}⚠{% else %}ℹ{% endif %}
+                </strong>
+                {{ message }}
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'));
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl);
+        });
+        toastList.forEach(toast => toast.show());
+    });
+</script>
+{% endif %}
 
 
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>{% block title %} Servion | Landing, Responsive &amp; Business Templatee {% endblock %}</title>
+    <title>{% block title %} Servion {% endblock %}</title>
 
 
     <!-- ===============================================-->
@@ -42,11 +75,11 @@
           <div class="collapse navbar-collapse border-top border-lg-0 mt-4 mt-lg-0" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto pt-2 pt-lg-0 font-base">
               <li class="nav-item px-2" ><a class="nav-link fw-medium active" aria-current="page" href="{% url 'main:index' %}">Home</a></li>
-              <li class="nav-item px-2" ><a class="nav-link" href="{% url 'main:index' %}">Blog</a></li>
+              <li class="nav-item px-2" ><a class="nav-link" href="{% url 'blog:index' %}">Blog</a></li>
               <li class="nav-item px-2" ><a class="nav-link" href="{% url 'main:contact' %}">Contact Us</a></li>
               <li class="nav-item px-2" ><a class="nav-link" href="{% url 'main:about' %}">About Us</a></li>
             </ul>
-            <form class="ps-lg-5"><a class="btn btn-light order-1 order-lg-0" href="{% url 'main:contact' %}">login
+            <form class="ps-lg-5"><a class="btn btn-light order-1 order-lg-0" href="{% url 'main:contact' %}">Login/Signup
                 <svg class="bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
                 </svg></a></form>
@@ -93,7 +126,7 @@
             <div class="col-6 col-md-4 col-xl-3 mb-3">
               <h5 class="lh-lg fw-bold text-white">FEATURES</h5>
               <ul class="list-unstyled mb-md-4 mb-lg-0">
-                <li class="lh-lg"><a class="text-200 text-decoration-none" href="{% url 'main:index' %}">Blog</a></li>
+                <li class="lh-lg"><a class="text-200 text-decoration-none" href="{% url 'blog:index' %}">Blog</a></li>
               </ul>
             </div>
             <div class="col-6 col-md-4 col-xl-3 mb-3">
@@ -103,7 +136,7 @@
               </ul>
             </div>
             <div class="col-xl-3 mb-3">
-              <h5 class="lh-lg fw-bold text-white">WE NEED</h5>
+              <h5 class="lh-lg fw-bold text-white">WE NEED MONEY</h5>
               <ul class="list-unstyled list-inline mb-6 mb-md-0">
                 <li class="list-inline-item mr-2"><a class="text-decoration-none" href="#!"><img class="list-social-icon" src="{% static 'mainApp/assets/img/gallery/visa.png' %}" width="50" alt="..." /></a></li>
                 <li class="list-inline-item mr-2"><a class="text-decoration-none" href="#!"><img class="list-social-icon" src="{% static 'mainApp/assets/img/gallery/master-card.png' %}" width="50" alt="..." /></a></li>

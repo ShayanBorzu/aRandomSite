@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-s9f)7xpgy$olp4ys4ty#90-q83swa%h1(-=1olcn$f-47=+=pd
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -23,3 +23,6 @@ DATABASES = {
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']  # noqa: F405
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # noqa: F405
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # noqa: F405

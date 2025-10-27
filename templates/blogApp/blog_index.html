@@ -1,0 +1,113 @@
+{% extends 'base_blogApp.html' %}
+{% load static %}
+{%block title%}ServIon | Blog Details{% endblock %}
+{% block content %}
+{% load blog_tags %}
+
+
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-lg-8">
+
+          <!-- Blog Posts Section -->
+          <section id="blog-posts" class="blog-posts section">
+
+            <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+              <div class="row gy-4">
+                {% for post in posts %}
+                <div class="col-lg-6">
+                  <article>
+                    <div class="post-img">
+                      <img href="{% url 'blog:details' post.id %}" src="{{ post.thumbnail.url }}" alt="" class="img-fluid">
+                    </div>
+
+                    <h2 class="title">
+                      <a href="{% url 'blog:details' post.id %}">{{ post.title }}</a>
+                    </h2>
+
+                    <div class="meta-top">
+                      <ul>
+                        <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="{% url 'blog:author' post.author %}">{{ post.author }}</a></li>
+                        <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="{% url 'blog:details' post.id %}"><time datetime="2022-01-01">{{ post.published_at|date:'Y m d' }}</time></a></li>
+                        <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="{% url 'blog:details' post.id %}">0 Comments</a></li>
+                      </ul>
+                    </div>
+
+                    <div class="content">
+                      <p>
+                        {{ post.content|truncatewords:10 }}
+
+                      </p>
+
+                      <div class="read-more">
+                        <a href="{% url 'blog:details' post.id %}">Read More</a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+                {% endfor %}
+                <!-- End post list item -->
+
+              </div><!-- End blog posts list -->
+
+            </div>
+
+          </section><!-- /Blog Posts Section -->
+
+          <!-- Pagination 2 Section -->
+          <section id="pagination-2" class="pagination-2 section">
+
+            <div class="container">
+              <div class="d-flex justify-content-center">
+                <ul>
+                  {% if posts.has_pervious %}
+                  <li><a href="?p={{ posts.previous_page_number }}"><i class="bi bi-chevron-left"></i></a></li>
+                  {% endif %}
+									{% for num in posts.paginator.page_range %}
+									{% if posts.number == num %}
+                  <li><a href="?p={{ num }}" class="active">{{ num }}</a></li>
+									{% else %}
+                  <li><a href="?p={{ num }}">{{ num }}</a></li>
+                  {% endif %}
+                  {% endfor %}
+                  {% if posts.has_next %}
+                  <li><a href="#"><i class="bi bi-chevron-right"></i></a></li>
+                  {% endif %}
+                </ul>
+              </div>
+            </div>
+          </section>
+          <!-- /Pagination 2 Section -->
+
+        </div>
+
+        <div class="col-lg-4 sidebar">
+
+          <div class="widgets-container" data-aos="fade-up" data-aos-delay="200">
+
+            <!-- Search Widget -->
+             {% search %}
+            <!--/Search Widget -->
+
+            <!-- Recent Posts Widget -->
+             {% recent_posts %}
+            <!--/Recent Posts Widget -->
+
+            <!-- Categories Widget -->
+             {% categories %}
+            <!--/Categories Widget -->
+
+            <!-- Tags Widget -->
+             {% tags %}
+            <!--/Tags Widget -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+{% endblock %}
