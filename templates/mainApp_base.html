@@ -79,10 +79,17 @@
               <li class="nav-item px-2" ><a class="nav-link" href="{% url 'main:contact' %}">Contact Us</a></li>
               <li class="nav-item px-2" ><a class="nav-link" href="{% url 'main:about' %}">About Us</a></li>
             </ul>
-            <form class="ps-lg-5"><a class="btn btn-light order-1 order-lg-0" href="{% url 'main:contact' %}">Login/Signup
+            {% if request.user.is_authenticated %}
+            <form class="ps-lg-5"><a class="btn btn-light order-1 order-lg-0" href="{% url 'accounts:logout' %}">Logged in as {{ request.user.username }}
+              <svg class="bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
+              </svg></a></form>
+              {% else %}
+              <form class="ps-lg-5"><a class="btn btn-light order-1 order-lg-0" href="{% url 'accounts:index' %}">Login/Signup
                 <svg class="bi bi-person-fill" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
                 </svg></a></form>
+            {% endif %}
           </div>
         </div>
       </nav>

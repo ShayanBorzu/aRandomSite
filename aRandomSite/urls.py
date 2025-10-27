@@ -26,7 +26,7 @@ urlpatterns = [
     path("blog/", include("blogApp.urls"), name="blogApp"),
     path("admin/", admin.site.urls, name="admin"),
     path("error404show/", show_error_404_view, name="show_error_404"),
-    path("accounts/", include("accountsApp"), name="accountsApp")
+    path("accounts/", include("accountsApp.urls"), name="accountsApp")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
