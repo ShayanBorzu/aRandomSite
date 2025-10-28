@@ -1,12 +1,14 @@
 {% load static %}
+{% load compress %}
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Login/Signup{% endblock %}</title>
+    {% compress css %}
     <link rel="stylesheet" href="{% static 'accountsApp/style.css' %}">
-    
+    {% endcompress %}
 </head>
 {% if messages %}
 <div class="messages-container">
@@ -20,7 +22,8 @@
 <body>
 {% block content %}
 {% endblock %}
-
+{% compress js %}
 <script src="{% static 'accountsApp/script.js' %}"></script>
+{% endcompress %}
 </body>
 </html>

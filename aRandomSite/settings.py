@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
+    'compressor',
     'django_summernote',
     'robots',
     'captcha',
@@ -112,3 +113,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_NAME = 'ServIon'
 
 LOGIN_URL = '/accounts/'
+
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'compressor.finders.CompressorFinder', 
+]
+
+
+
+COMPRESS_CSS_FILTERS = [
+    'compressor.filters.css_default.CssAbsoluteFilter',
+    'compressor.filters.cssmin.rCSSMinFilter', 
+]
+COMPRESS_JS_FILTERS = [
+    'compressor.filters.jsmin.JSMinFilter',  
+]
+
+COMPRESS_CSS_HASHING_METHOD = 'content'
+COMPRESS_REBUILD_TIMEOUT = 2592000  

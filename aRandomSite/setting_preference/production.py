@@ -1,61 +1,33 @@
-"""
-Django settings for production environment
-"""
-
-import os
-from pathlib import Path
 from aRandomSite.settings import * # noqa
+import os
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-s9f)7xpgy$olp4ys4ty#90-q83swa%h1(-=1olcn$f-47=+=pd'
 
-
-# Security - Use environment variable
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
-
-# CRITICAL: Set to False in production
-DEBUG = False
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 ALLOWED_HOSTS = ['shayanborzu.ir', 'www.shayanborzu.ir']
 
-
-# Same INSTALLED_APPS and MIDDLEWARE as development
-
-
-# Database - MySQL/PostgreSQL for production
+# Database
+# https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST', 'localhost'),
-        'PORT': os.environ.get('DB_PORT', '3306'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # noqa: F405
     }
 }
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']  # noqa: F405
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # noqa: F405
 
-# Static files - Different paths for production
-STATIC_URL = '/static/'
-STATIC_ROOT = '/home/cpanelusername/public_html/static'
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # noqa: F405
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = '/home/cpanelusername/public_html/media'
+SITE_ID = 2
 
-
-# Email - Real SMTP for production
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-DEFAULT_FROM_EMAIL = 'noreply@yourdomain.com'
-
-
-# Security settings - Strict for production
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-SECURE_SSL_REDIRECT = True
-SECURE_BROWSER_XSS_FILTER = True
-SECURE_CONTENT_TYPE_NOSNIFF = True
-X_FRAME_OPTIONS = 'DENY'
+COMPRESS_OFFLINE = True
+COMPRESS_ENABLED = True  

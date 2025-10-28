@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load compress %}
 
 
 <!DOCTYPE html>
@@ -53,6 +53,7 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
+     {% compress css %}
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'mainApp/assets/img/favicons/apple-touch-icon.png' %}">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'mainApp/assets/img/favicons/favicon-32x32.png' %}">
     <link rel="icon" type="image/png" sizes="16x16" href="{% static 'mainApp/assets/img/favicons/favicon-16x16.png' %}">
@@ -66,7 +67,7 @@
     <!--    Stylesheets-->
     <!-- ===============================================-->
     <link href="{% static 'mainApp/assets/css/theme.css' %}" rel="stylesheet" />
-
+    {% endcompress %}
   </head>
       <main class="main" id="top">
       <nav class="navbar navbar-expand-lg navbar-light fixed-top py-4 d-block" data-navbar-on-scroll="data-navbar-on-scroll">
@@ -178,6 +179,7 @@
     <!-- ===============================================-->
     <!--    JavaScripts-->
     <!-- ===============================================-->
+     {% compress js %}
     <script src="{% static 'mainApp/vendors/@popperjs/popper.min.js' %}"></script>
     <script src="{% static 'mainApp/vendors/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'mainApp/vendors/is/is.min.js' %}"></script>
@@ -186,6 +188,7 @@
     <script src="{% static 'mainApp/assets/js/theme.js' %}"></script>
 
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600;700;800&amp;display=swap" rel="stylesheet">
+    {% endcompress %}
   </body>
 
 </html>

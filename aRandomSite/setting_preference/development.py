@@ -28,3 +28,6 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # noqa: F405
 
 SITE_ID = 2
+
+COMPRESS_OFFLINE = False 
+COMPRESS_ENABLED = False  
