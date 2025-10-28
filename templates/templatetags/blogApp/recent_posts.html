@@ -8,7 +8,7 @@
     <div class="post-item">
     <img src="{{ post.thumbnail.url }}" alt="" class="flex-shrink-0">
     <div>
-        <h4><a href="blog-details.html">{{ post.title }}</a></h4>
+        <h4><a href="{% url 'blog:details' post.id %}">{{ post.title }}</a></h4>
         <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|naturaltime }}</time>
     </div>
     </div>

@@ -1,24 +1,7 @@
+{% extends 'base_accountsApp.html' %}
 {% load static %}
+{% block content %}
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Login/Signup</title>
-    <link rel="stylesheet" href="{% static 'accountsApp/style.css' %}">
-    
-</head>
-<body>
-    {% if messages %}
-    <div class="messages-container">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
   <section class="forms-section">
     <h1 class="section-title">Login/Signup Forms</h1>
     <div class="forms">
@@ -27,21 +10,44 @@
           Login
           <span class="underline"></span>
         </button>
-        <form class="form form-login" method="POST" action="{% url 'accounts:index' %}">
-          {% csrf_token %}
-          <fieldset>
-            <legend>Please, enter your email and password for login.</legend>
-            <div class="input-block">
-              <label for="login-email">E-mail or Username</label>
-              <input id="login-email" name="username" type="text" required>
-            </div>
-            <div class="input-block">
-              <label for="login-password">Password</label>
-              <input id="login-password" name="password" type="password" required>
-            </div>
-          </fieldset>
-          <button type="submit" class="btn-login">Login</button>
-        </form>
+<form class="form form-login" method="POST">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Please, enter your email and password for login.</legend>
+    <div class="input-block">
+      <label for="login-email">E-mail or Username</label>
+      <input id="login-email" name="username" type="text" required>
+    </div>
+    <div class="input-block">
+      <label for="login-password">Password</label>
+      <input id="login-password" name="password" type="password" required>
+    </div>
+  </fieldset>
+  <button type="submit" class="btn-login">Login</button>
+  
+  <!-- Add this forgot password link -->
+  <div class="forgot-password-link">
+    <a href="{% url 'accounts:password_reset' %}">Forgot your password?</a>
+  </div>
+</form>
+
+<style>
+.forgot-password-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.forgot-password-link a {
+  color: #a7e245;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.forgot-password-link a:hover {
+  text-decoration: underline;
+}
+</style>
+
       </div>
       <div class="form-wrapper">
         <button type="button" class="switcher switcher-signup">
@@ -74,7 +80,4 @@
       </div>
     </div>
   </section>
-
-  <script src="{% static 'accountsApp/script.js' %}"></script>
-</body>
-</html>
+{% endblock %}

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from blogApp.models import Post, Comment
 from django.utils import timezone
@@ -50,20 +50,26 @@ def blog_details_view(request, pk):
     if request.method == "POST":
         newslettform =  NewsLetterForm(request.POST)
         commentform = CommentForm(request.POST)
-        if newslettform.is_valid():
+        if commentform.is_valid():
+            comment = commentform.save(commit=False)
+            comment.post = post
+            comment.save()
+            
+            messages.add_message(
+                request,
+                messages.SUCCESS,
+                "Thank you for commenting. Your comment is awaiting approval.",
+            )
+            return redirect('blog:details', pk=post.pk)
+            
+        elif newslettform.is_valid():
             newslettform.save()
             messages.add_message(
                 request,
                 messages.SUCCESS,
                 "Thank you for signing up in our Newsletter.",
             )
-        elif commentform.is_valid():
-            commentform.save()
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                "Thank you for commenting.",
-            )
+            return redirect('blog:index')
         else:
             messages.add_message(
                 request, messages.ERROR, "Error encountered. empty cache and try again."

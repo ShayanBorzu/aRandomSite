@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from mainApp.forms import ContactForm
 from django.contrib import messages
 
@@ -24,6 +24,7 @@ def contactView(request):
                 messages.SUCCESS,
                 "Thank you for contacting us. We'll get back to you within 24 hours.",
             )
+            return redirect('main:contact')
         else:
             messages.add_message(
                 request, messages.ERROR, "Error encountered. empty cache and try again."

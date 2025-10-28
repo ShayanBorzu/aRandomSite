@@ -98,8 +98,12 @@
                         </p>
                         
                         <form method="POST" action="{% url 'main:contact' %}">
-                            {% csrf_token %}
                             <div class="row g-3">
+                                {% csrf_token %}
+                                {% if request.user.is_authenticated %}
+                                <input type="hidden" name="full_name" value="{{ request.user.username }}"/>
+                                <input type="hidden" name="email" value="{{ request.user.email }}"/>
+                                {% else %}
                                 <!-- Name Field -->
                                 <div class="col-md-6">
                                     <label for="contactName" class="form-label fw-medium">Your Name <span class="text-danger">*</span></label>
@@ -111,13 +115,12 @@
                                     <label for="contactEmail" class="form-label fw-medium">Your Email <span class="text-danger">*</span></label>
                                     <input class="form-control form-control-lg" name="email" placeholder="john@example.com" aria-label="Email" required />
                                 </div>
-
+                                {% endif %}
                                 <!-- Phone Field -->
                                 <div class="col-md-6">
                                     <label for="contactPhone" class="form-label fw-medium">Phone Number</label>
                                     <input class="form-control form-control-lg" name="phone_number" placeholder="+1 (234) 567-890" aria-label="Phone" />
                                 </div>
-
                                 <!-- Subject Field -->
                                 <div class="col-md-6">
                                     <label for="contactSubject" class="form-label fw-medium">Subject</label>
@@ -147,7 +150,9 @@
                                         </label>
                                     </div>
                                 </div>
-
+                                <div class="p2">
+                                {{ form.captcha }}
+                                </div>
                                 <!-- Submit Button -->
                                 <div class="col-12">
                                     <button class="btn btn-primary btn-lg px-5 py-3 w-100" type="submit">

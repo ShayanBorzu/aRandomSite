@@ -2,6 +2,11 @@ from django.shortcuts import render, redirect
 from accountsApp.forms import SignUpForm, LoginForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.urls import reverse_lazy
+from django.contrib.auth.views import PasswordResetView  
+from django.contrib.messages.views import SuccessMessageMixin
+
+
 
 def accounts_index_view(request):
     if request.method == 'POST':
@@ -42,3 +47,9 @@ def accounts_logout_view(request):
         return redirect("main:index")
     messages.add_message(request, messages.ERROR, "Error encountered.")
     return redirect("main:index")
+
+class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    template_name = 'accountsApp/password_reset.html'
+    email_template_name = 'accountsApp/registration/password_reset_email.html'
+    subject_template_name = 'accountsApp/registration/password_reset_subject.txt'
+    success_url = reverse_lazy('accounts:password_reset_done')

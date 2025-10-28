@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Tag(models.Model):
@@ -51,6 +52,9 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        """Return the URL for this post"""
+        return reverse('blog:details', kwargs={'pk': self.pk})
     class Meta:
         ordering = ["-created_at"]
         
@@ -58,8 +62,7 @@ class Post(models.Model):
 class Comment(models.Model):
     post = models.ForeignKey('Post', on_delete=models.CASCADE)
     full_name = models.CharField(max_length=100, verbose_name="Full Name")
-    email = models.EmailField(verbose_name="Email Address")
-    website = models.CharField(max_length=100, verbose_name="Website", blank=True, null=True)
+    email = models.EmailField(verbose_name="Email Address",blank=True, null=True)
     text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     published_at = models.DateTimeField(auto_now=True)

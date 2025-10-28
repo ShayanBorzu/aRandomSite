@@ -26,3 +26,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # noqa: F405
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') # noqa: F405
+
+SITE_ID = 2

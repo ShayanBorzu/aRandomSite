@@ -16,21 +16,34 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 from aRandomSite.views import show_error_404_view
+from django.contrib.sitemaps.views import sitemap
+from mainApp.sitemaps import StaticViewSitemap
+from blogApp.sitemaps import BlogSitemap
+
+sitemaps = {"static": StaticViewSitemap, "blog": BlogSitemap}
 
 urlpatterns = [
     path("", include("mainApp.urls"), name="mainApp"),
     path("blog/", include("blogApp.urls"), name="blogApp"),
     path("admin/", admin.site.urls, name="admin"),
     path("error404show/", show_error_404_view, name="show_error_404"),
-    path("accounts/", include("accountsApp.urls"), name="accountsApp")
+    path("accounts/", include("accountsApp.urls"), name="accountsApp"),
+    path("captcha/", include("captcha.urls")),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+    re_path(r'^robots\.txt', include('robots.urls')),
+    path('summernote/', include('django_summernote.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-    
-    
+
 handler404 = "aRandomSite.views.error_404_view"
